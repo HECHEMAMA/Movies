@@ -1,0 +1,28 @@
+---
+import CardMovie from './CardMovie.astro'
+
+const url =
+  'https://api.themoviedb.org/3/movie/popular?api_key=aaaf54598004f71ccade7831814b287b&Language=es-MX'
+const option = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization:
+      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYWFmNTQ1OTgwMDRmNzFjY2FkZTc4MzE4MTRiMjg3YiIsIm5iZiI6MTcyNjk3MTA3MS42NDc3MzksInN1YiI6IjY2ZWUxMzUxYTgyYjAwNTcwMzI1ZDA2MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.X7yr4grWDW08W8z_FxPUtm3wn6DnRcKH6Wll7-sKKjY',
+  },
+}
+const response = await fetch(url, option)
+const data = await response.json()
+---
+
+{
+  data.results.map((peli) => (
+    <CardMovie
+      id={peli.id}
+      title={peli.title}
+      description={peli.overview}
+      release_date={peli.release_date}
+      poster_path={peli.poster_path}
+    />
+  ))
+}
