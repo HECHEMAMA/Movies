@@ -2,7 +2,7 @@
 import CardMovie from './CardMovie.astro'
 
 const url =
-  'https://api.themoviedb.org/3/movie/popular?api_key=aaaf54598004f71ccade7831814b287b&Language=es-MX'
+  'https://api.themoviedb.org/3/movie/popular?api_key=aaaf54598004f71ccade7831814b287b?language=en-US'
 const option = {
   method: 'GET',
   headers: {
@@ -16,7 +16,7 @@ const data = await response.json()
 ---
 
 {
-  data.results.map((peli) => (
+  data.results.map((peli: any) => (
     <CardMovie
       id={peli.id}
       title={peli.title}

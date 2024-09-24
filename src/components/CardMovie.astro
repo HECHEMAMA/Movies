@@ -1,0 +1,26 @@
+---
+interface Props {
+  id: string
+  title: string
+  description: string
+  release_date: string
+  poster_path: string
+}
+
+const { id, title, description, release_date, poster_path } = Astro.props
+---
+
+<a
+  class="flex flex-col rounded-md mx-auto scale-1 cursor-pointer hover:scale-105 duration-500"
+  href={`/movies/${id}`}
+>
+  <img
+    transition:name={`movie-${id}`}
+    class="rounded-xl self-center z-0"
+    src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+  />
+  <h2
+    class="prose prose-invert text-white py-2 rounded-b-xl text-center font-semibold text-lg"
+    >{title}</h2
+  >
+</a>
