@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+export const getStaticPaths = async () => {
+  const url =
+    'https://api.themoviedb.org/3/movie/popular?api_key=aaaf54598004f71ccade7831814b287b?language=en-US'
+  const option = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYWFmNTQ1OTgwMDRmNzFjY2FkZTc4MzE4MTRiMjg3YiIsIm5iZiI6MTcyNjk3MTA3MS42NDc3MzksInN1YiI6IjY2ZWUxMzUxYTgyYjAwNTcwMzI1ZDA2MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.X7yr4grWDW08W8z_FxPUtm3wn6DnRcKH6Wll7-sKKjY',
+    },
+  }
+  const response = await fetch(url, option)
+  const data = await response.json()
+  return data.results.map((movie: any) => ({
+    params: { id: movie.id },
+    props: { movie },
+  }))
+}
+
+const { movie } = Astro.props
+const { id, title, overview, poster_path, release_date } = movie
+---
+
+<Layout title={`${title} - Dev Movie`}>
+  <section
+    class="py-20 max-w-screen-md mx-auto flex flex-col align-center gap-10 px-5 lg:flex-row lg:px-0"
+  >
+    <img
+      class="w-64 object-cover mx-auto lg:h-96 rounded-xl"
+      transition:name={`movie${id}`}
+      src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+      alt=""
+    />
+    <div class="flex flex-col justify-between gap-5">
+      <h1
+        class="text-2xl font-bold text-white underline decoration-white opacity-90"
+        >{title}</h1
+      >
+      <p class="prose prose-invert text-lg text-white text-opacity-80">
+        {overview}
+      </p>
+      <small class="font-semibold text-white text-left">{release_date}</small>
+    </div>
+  </section>
+</Layout>
